@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  SPDX-License-Identifier: GPL-3.0-only
+  Copyright (C) 2026 Md. Rifat Hasan Jihan
+-->
+<!-- White bell glyph. Geometry is TrayIconFactory.BuildBellPath verbatim (32x32
+     design space), scaled x1.725 and centred in the 108dp canvas. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <group
+        android:scaleX="1.725"
+        android:scaleY="1.725"
+        android:translateX="26.4"
+        android:translateY="23.5">
+        <path
+            android:fillColor="#FF000000"
+            android:pathData="M14,4L18,4L18,7C23,7.5 24,12 24,16L24,22L27,24L27,25.5L5,25.5L5,24L8,22L8,16C8,12 9,7.5 14,7Z M14.5,28a1.5,1.5 0,1 0,3 0a1.5,1.5 0,1 0,-3 0Z" />
+    </group>
+</vector>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  SPDX-License-Identifier: GPL-3.0-only
+  Copyright (C) 2026 Md. Rifat Hasan Jihan
+-->
+<!-- Only the one-off copy made for "Share log" is exposed; the live log is not. -->
+<paths>
+    <cache-path name="shared" path="shared/" />
+</paths>

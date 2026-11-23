@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  SPDX-License-Identifier: GPL-3.0-only
+  Copyright (C) 2026 Md. Rifat Hasan Jihan
+
+  Deliberately NO android.permission.INTERNET: SlackWake never talks to any server.
+  The :app:check task fails the build if any library merges it in.
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Alert notification (13+ runtime permission). -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <!-- Launch the alert screen over the lock screen. User-grantable on 14+. -->
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+    <!-- Alert vibration (normal permission, granted at install). -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <!-- Package visibility (11+): only to tell the user whether Slack is installed
+         and to deep-link to Slack's notification settings. -->
+    <queries>
+        <package android:name="com.Slack" />
+    </queries>
+
+    <application
+        android:name=".SlackWakeApp"
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.SlackWake">
+
+        <activity
+            android:name=".ui.MainActivity"
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Fullscreen alert: own task, never in Recents, shown over the keyguard. -->
+        <activity
+            android:name=".alert.AlertActivity"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|keyboard|keyboardHidden|navigation"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:launchMode="singleInstance"
+            android:noHistory="false"
+            android:taskAffinity="io.github.rhjihan.slackwake.alert"
+            android:theme="@style/Theme.SlackWake.Alert" />
+        <!-- showWhenLocked / turnScreenOn are set in AlertActivity.onCreate (with the
+             pre-27 window-flag fallback); the manifest attributes need API 27. -->
+
+        <service
+            android:name=".listener.SlackNotificationListener"
+            android:exported="true"
+            android:label="@string/listener_label"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+            <intent-filter>
+                <action android:name="android.service.notification.NotificationListenerService" />
+            </intent-filter>
+            <!-- No default_filter_types: users may set Slack's own notifications to silent
+                 and rely on SlackWake's alarm, so silent Slack notifications must arrive. -->
+        </service>
+
+        <receiver
+            android:name=".alert.AlertActionReceiver"
+            android:exported="false" />
+
+        <!-- Quick Settings tile: tray-icon parity (toggle + Armed/Paused/Disabled). -->
+        <service
+            android:name=".tile.MonitorTileService"
+            android:exported="true"
+            android:icon="@drawable/ic_bell_armed"
+            android:label="@string/tile_label"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.service.quicksettings.TOGGLEABLE_TILE"
+                android:value="true" />
+        </service>
+
+        <!-- Invisible trampoline behind the dynamic shortcuts (tray menu parity). -->
+        <activity
+            android:name=".shortcuts.ShortcutActionActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:noHistory="true"
+            android:taskAffinity=""
+            android:theme="@style/Theme.SlackWake.Translucent" />
+
+        <!-- Share log: exposes only the one-off copy in cache/shared/. -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.diagnostics"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+    </application>
+
+</manifest>

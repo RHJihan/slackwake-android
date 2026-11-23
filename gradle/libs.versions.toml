@@ -1,0 +1,81 @@
+# SPDX-License-Identifier: GPL-3.0-only
+# Copyright (C) 2026 Md. Rifat Hasan Jihan
+#
+# Every version is pinned exactly. Checked against the Google Maven / Maven Central /
+# Gradle Plugin Portal metadata on 2026-11-22 (latest stable at that date).
+# AGP is held at 9.2.1, the newest the current stable Android Studio supports
+# (9.5.2 exists but Studio refuses to sync it). 9.2 supports API 37.0 and Gradle >= 9.4.1.
+# Compose BOM is held at 2026.09.00 (Compose 1.12.1, Material 3 1.4.0): BOM 2026.11.01's
+# Compose 1.13 requires compileSdk 37.1, which AGP 9.2 cannot compile against.
+
+[versions]
+agp = "9.2.1"
+kotlin = "2.4.21"
+ksp = "2.3.14"
+coroutines = "1.11.0"
+serialization = "1.13.0"
+hilt = "2.60.1"
+androidx-hilt = "1.4.0"
+compose-bom = "2026.09.00"
+activity = "1.13.0"
+lifecycle = "2.11.1"
+datastore = "1.3.0"
+core-ktx = "1.19.1"
+junit4 = "4.13.2"
+turbine = "1.2.1"
+robolectric = "4.18.1"
+androidx-test-core = "1.7.0"
+androidx-test-runner = "1.7.0"
+androidx-test-rules = "1.7.0"
+androidx-test-ext-junit = "1.3.0"
+espresso = "3.7.0"
+ktlint-gradle = "14.2.0"
+ktlint-cli = "1.8.0"
+
+[libraries]
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
+kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization" }
+
+androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "core-ktx" }
+androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity" }
+androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycle" }
+androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle" }
+androidx-lifecycle-service = { module = "androidx.lifecycle:lifecycle-service", version.ref = "lifecycle" }
+androidx-lifecycle-process = { module = "androidx.lifecycle:lifecycle-process", version.ref = "lifecycle" }
+androidx-datastore = { module = "androidx.datastore:datastore", version.ref = "datastore" }
+
+compose-bom = { module = "androidx.compose:compose-bom", version.ref = "compose-bom" }
+compose-ui = { module = "androidx.compose.ui:ui" }
+compose-ui-graphics = { module = "androidx.compose.ui:ui-graphics" }
+compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
+compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
+compose-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4" }
+compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
+compose-material3 = { module = "androidx.compose.material3:material3" }
+compose-material3-navigation-suite = { module = "androidx.compose.material3:material3-adaptive-navigation-suite" }
+compose-material-icons-extended = { module = "androidx.compose.material:material-icons-extended" }
+
+hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
+hilt-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt" }
+hilt-android-testing = { module = "com.google.dagger:hilt-android-testing", version.ref = "hilt" }
+androidx-hilt-viewmodel-compose = { module = "androidx.hilt:hilt-lifecycle-viewmodel-compose", version.ref = "androidx-hilt" }
+
+junit4 = { module = "junit:junit", version.ref = "junit4" }
+turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
+robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
+androidx-test-core = { module = "androidx.test:core-ktx", version.ref = "androidx-test-core" }
+androidx-test-runner = { module = "androidx.test:runner", version.ref = "androidx-test-runner" }
+androidx-test-rules = { module = "androidx.test:rules", version.ref = "androidx-test-rules" }
+androidx-test-ext-junit = { module = "androidx.test.ext:junit-ktx", version.ref = "androidx-test-ext-junit" }
+espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "espresso" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint-gradle" }

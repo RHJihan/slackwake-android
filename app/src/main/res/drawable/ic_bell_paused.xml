@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  SPDX-License-Identifier: GPL-3.0-only
+  Copyright (C) 2026 Md. Rifat Hasan Jihan
+-->
+<!-- Paused: outlined bell (Windows: amber tray bell). Monochrome so the QS tile can tint
+     it; the settings pill adds the amber color. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="32"
+    android:viewportHeight="32"
+    android:tint="?android:attr/colorControlNormal">
+    <path
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="2.2"
+        android:strokeLineJoin="round"
+        android:pathData="M14,4L18,4L18,7C23,7.5 24,12 24,16L24,22L27,24L27,25.5L5,25.5L5,24L8,22L8,16C8,12 9,7.5 14,7Z" />
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M14.5,28a1.5,1.5 0,1 0,3 0a1.5,1.5 0,1 0,-3 0Z" />
+</vector>

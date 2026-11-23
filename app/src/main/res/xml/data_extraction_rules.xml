@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  SPDX-License-Identifier: GPL-3.0-only
+  Copyright (C) 2026 Md. Rifat Hasan Jihan
+-->
+<!-- Android 12+. Only settings are backed up. The diagnostic log never leaves the
+     device. -->
+<data-extraction-rules>
+    <cloud-backup>
+        <include domain="file" path="datastore/settings.json" />
+    </cloud-backup>
+    <device-transfer>
+        <include domain="file" path="datastore/settings.json" />
+    </device-transfer>
+</data-extraction-rules>

@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  SPDX-License-Identifier: GPL-3.0-only
+  Copyright (C) 2026 Md. Rifat Hasan Jihan
+-->
+<resources>
+    <string name="app_name">SlackWake</string>
+    <string name="listener_label">SlackWake Slack listener</string>
+
+    <!-- Alerts channel / notification -->
+    <string name="channel_alerts_name">Alerts</string>
+    <string name="channel_alerts_description">Fullscreen Slack alerts while you are away. Silent: SlackWake plays its own alarm sound.</string>
+    <string name="alert_action_dismiss">Dismiss</string>
+    <string name="channel_active_name">Active alert</string>
+    <string name="channel_active_description">Shown while the alert screen is open. Quiet, with no pop-up, because the alert already fills the screen.</string>
+
+    <!-- Alert screen (texts ported from OverlayWindow) -->
+    <string name="alert_title">Slack notification received</string>
+    <string name="alert_channel">Channel: %1$s</string>
+    <string name="alert_from">From: %1$s</string>
+    <string name="alert_no_preview">(no preview available)</string>
+    <string name="alert_dismiss_hint">Tap anywhere, press back, or press any key to dismiss</string>
+    <string name="alert_dismiss_a11y">Dismiss alert</string>
+    <string name="alert_a11y_description">Slack alert. Double-tap to dismiss.</string>
+
+    <!-- Status (ported from MainViewModel.ComputeStatusText; Active/Idle → Armed/Paused) -->
+    <string name="state_armed">Armed</string>
+    <string name="state_paused">Paused</string>
+    <string name="state_disabled">Disabled</string>
+    <string name="status_disabled">Disabled</string>
+    <string name="status_paused">Paused: alerts paused while you\'re using your device</string>
+    <string name="status_armed_all">Armed: overlay armed for the next Slack ping</string>
+    <string name="status_off_schedule">Paused: outside your monitoring schedule</string>
+    <string name="status_armed_keywords">Armed: overlay armed only for pings matching your keywords</string>
+    <string name="problem_listener_missing">Notification access is off, so SlackWake can\'t see Slack notifications.</string>
+    <string name="problem_listener_disconnected">Waiting for Android to connect the notification listener.</string>
+    <string name="problem_notifications_blocked">Notifications are blocked: alerts will only play a sound.</string>
+    <string name="problem_channel_blocked">The \"Alerts\" notification channel is turned off: alerts will only play a sound.</string>
+    <string name="problem_full_screen_denied">Fullscreen alerts aren\'t allowed: alerts appear as a heads-up notification with sound.</string>
+    <string name="status_a11y">Status: %1$s. %2$s</string>
+
+    <!-- Quick toggles (tray menu parity) -->
+    <string name="toggle_enabled">Enable monitoring</string>
+    <string name="toggle_enabled_caption">Watch for Slack pings while you\'re away.</string>
+    <string name="toggle_sound">Sound alert</string>
+    <string name="toggle_visual">Visual alert</string>
+    <string name="toggle_autostop">Stop alert automatically</string>
+
+    <!-- Setup / prerequisites -->
+    <string name="setup_title">Finish setup</string>
+    <string name="prereq_listener">Notification access</string>
+    <string name="prereq_listener_body">Lets SlackWake see Slack\'s notifications. Nothing else is read, stored or sent anywhere.</string>
+    <string name="prereq_notifications">Show notifications</string>
+    <string name="prereq_notifications_body">Needed to show the alert and its Dismiss button.</string>
+    <string name="prereq_full_screen">Fullscreen alerts</string>
+    <string name="prereq_full_screen_body">Lets the alert take over the screen, even on the lock screen. Without it you still get a heads-up notification and the sound.</string>
+    <string name="prereq_battery">Battery optimization</string>
+    <string name="prereq_battery_body">Some phones stop background apps aggressively. If alerts go missing, set SlackWake to \"Unrestricted\".</string>
+    <string name="prereq_slack">Slack notifications</string>
+    <string name="prereq_slack_body">SlackWake only sees what Slack posts. In Slack: You → Notifications, keep mobile notifications on and avoid \"Do not disturb\" for pings you need. Slack\'s own channel can be silent: SlackWake plays its own sound.</string>
+    <string name="prereq_slack_missing">Slack doesn\'t seem to be installed.</string>
+    <string name="prereq_granted">Done</string>
+    <string name="prereq_open">Open settings</string>
+    <string name="prereq_open_slack">Open Slack settings</string>
+    <string name="prereq_slack_confirm">I\'ve turned this on</string>
+    <string name="prereq_undo">Undo</string>
+    <string name="prereq_allow">Allow</string>
+    <string name="prereq_optional">Optional</string>
+
+    <!-- Sections -->
+    <string name="quick_toggles">Quick toggles</string>
+    <string name="section_away">Away detection</string>
+    <string name="section_sound">Sound</string>
+    <string name="section_vibration">Vibration</string>
+    <string name="section_flash">Visual flash</string>
+    <string name="section_autostop">Stop automatically</string>
+    <string name="section_battery">Battery</string>
+    <string name="tab_home">Home</string>
+    <string name="tab_alerts">Alerts</string>
+    <string name="tab_timing">Timing</string>
+    <string name="tab_filters">Filters</string>
+    <string name="tab_more">More</string>
+    <string name="section_schedule">Schedule</string>
+
+    <!-- Monitoring schedule (Android-only) -->
+    <string name="schedule_title">Monitor on a schedule</string>
+    <string name="schedule_caption">Only alert during these hours. Outside them SlackWake stays quiet, even when you’re away.</string>
+    <string name="schedule_day_off">Off</string>
+    <string name="schedule_next_day">%1$s (next day)</string>
+    <string name="schedule_all_day_from">All day from %1$s</string>
+    <string name="schedule_edit_day">Edit %1$s</string>
+    <string name="schedule_day_switch">Monitor on %1$s</string>
+    <string name="schedule_on_until">On now · until %1$s</string>
+    <string name="schedule_on_always">On now · around the clock</string>
+    <string name="schedule_off_until">Off now · starts %1$s</string>
+    <string name="schedule_no_days">No days selected, so SlackWake won’t alert.</string>
+    <string name="schedule_start_label">Starts</string>
+    <string name="schedule_end_label">Ends</string>
+    <string name="schedule_pick_start">Start time</string>
+    <string name="schedule_pick_end">End time</string>
+    <string name="schedule_hint_same_day">Ends the same day.</string>
+    <string name="schedule_hint_next_day">Ends the next day, on %1$s.</string>
+    <string name="schedule_hint_all_day">Same start and end: on for 24 hours.</string>
+    <string name="schedule_copy_to">Copy to</string>
+    <string name="schedule_copy_weekdays">Weekdays</string>
+    <string name="schedule_copy_all">All days</string>
+    <string name="schedule_save">Save</string>
+    <string name="schedule_with_phone_time">%1$s (%2$s your time)</string>
+
+    <!-- Schedule time zone -->
+    <string name="tz_title">Time zone</string>
+    <string name="close">Close</string>
+    <string name="tz_search">Search city, zone or GMT offset</string>
+    <string name="tz_use_phone">Use phone time zone</string>
+    <string name="tz_no_match">No time zone matches that search.</string>
+    <string name="tz_row_phone">Phone’s time zone · %1$s</string>
+    <string name="tz_row_now_there">Now %1$s there · not your phone’s time zone</string>
+    <string name="tz_change">Change</string>
+    <string name="tz_editor_hint">Times are in %1$s time.</string>
+    <string name="section_diagnostics">Diagnostics</string>
+    <string name="section_backup">Backup &amp; restore</string>
+
+    <!-- Settings backup (Android-only) -->
+    <string name="backup_caption">Save your settings to a file you choose (for example Downloads or Google Drive), or restore them from one. Setup progress and diagnostics on this phone aren’t included.</string>
+    <string name="backup_export">Back up</string>
+    <string name="backup_restore">Restore</string>
+    <string name="backup_saved">Settings backed up</string>
+    <string name="backup_save_failed">Couldn’t save the backup. Try another location.</string>
+    <string name="backup_restored">Settings restored</string>
+    <string name="backup_undo">Undo</string>
+    <string name="backup_confirm_title">Restore settings?</string>
+    <string name="backup_confirm_body">This replaces your current settings. Setup progress, diagnostics and the flash-warning choice stay as they are on this phone.</string>
+    <string name="backup_source_backup">Backup from %1$s (SlackWake %2$s).</string>
+    <string name="backup_source_backup_undated">SlackWake settings backup.</string>
+    <string name="backup_source_plain">Settings file from SlackWake (Windows or Android). Settings that only exist on Windows are ignored.</string>
+    <string name="backup_sound_kept">The alert sound in this backup isn’t available on this phone, so your current sound is kept.</string>
+    <string name="backup_error_read">Couldn’t open that file.</string>
+    <string name="backup_error_too_large">That file is too large to be a SlackWake backup.</string>
+    <string name="backup_error_not_slackwake">That isn’t a SlackWake settings backup.</string>
+    <string name="backup_error_newer">This backup is from a newer SlackWake. Update the app, then try again.</string>
+    <string name="backup_error_invalid">This backup is damaged or incomplete. Nothing was changed.</string>
+    <string name="backup_error_no_picker">No file manager is available on this phone.</string>
+    <string name="section_about">About</string>
+
+    <string name="idle_timeout">Away timeout (seconds)</string>
+    <string name="idle_timeout_caption">How long your phone must stay locked before Slack pings alert you.</string>
+    <string name="alert_delay">Alert delay (seconds)</string>
+    <string name="alert_delay_caption">Wait this long after the alert appears before sound, vibration and flash start.</string>
+
+    <string name="mute_title">Mute by keyword</string>
+    <string name="mute_caption">Skip the alert, sound, and flash for matching pings — everything else still wakes you.</string>
+    <string name="mute_field">Muted keywords</string>
+    <string name="mute_help">A ping is muted when its sender, channel, or text contains any of these (case-insensitive). Wrap a phrase in double quotes to match it exactly, including commas. Prefix an entry with // to comment it out.</string>
+    <string name="mute_placeholder">standup, #random, \"This is a test notification\"</string>
+    <string name="allow_title">Alert only by keyword</string>
+    <string name="allow_caption">Wake you only for matching pings — everything else stays silent.</string>
+    <string name="allow_field">Allowed keywords</string>
+    <string name="allow_help">Only pings whose sender, channel, or text contains one of these will wake you (case-insensitive). Wrap a phrase in double quotes to match it exactly, including commas. Prefix an entry with // to comment it out. Leave empty to disable.</string>
+    <string name="allow_placeholder">@here, #incidents, \"on call\"</string>
+    <string name="both_filters_title">Both filters are on</string>
+    <string name="both_filters_body">A ping wakes you only if it matches an allowed keyword and does not match a muted keyword. If a keyword is in both lists, muting wins.</string>
+
+    <string name="sound_alert_caption">Play a sound when the alert appears.</string>
+    <string name="sound_field">Sound</string>
+    <string name="sound_default">Default alarm sound</string>
+    <string name="sound_choose">Choose sound</string>
+    <string name="sound_choose_file">Choose file…</string>
+    <string name="sound_group_alarms">Alarms</string>
+    <string name="sound_group_notifications">Notifications</string>
+    <string name="sound_group_ringtones">Ringtones</string>
+    <string name="sound_group_custom">Your file</string>
+    <string name="sound_preview_play">Preview sound</string>
+    <string name="sound_preview_stop">Stop preview</string>
+    <string name="sound_picker_hint">Tap a sound to select and preview it.</string>
+    <string name="sound_volume_note">Plays on the alarm volume.</string>
+    <string name="loop_title">Loop sound</string>
+    <string name="loop_caption">Replay the alert continuously instead of playing once.</string>
+    <string name="flash_title">Visual flash</string>
+    <string name="flash_caption">Strobe the alert between two colors.</string>
+    <string name="flash_speed">Flash speed (milliseconds per color change)</string>
+    <string name="flash_colors">Flash colors</string>
+    <string name="flash_colors_caption">Tap a swatch to change it; the alert text picks its own contrast.</string>
+    <string name="flash_color_a">First flash color, %1$s</string>
+    <string name="flash_color_b">Second flash color, %1$s</string>
+    <string name="autostop_title">Stop alerts automatically</string>
+    <string name="autostop_caption">Stop alerts after a set time. Once the visual flash has stopped (or if it’s off), the screen is allowed to turn off; the alert stays until you dismiss it.</string>
+    <string name="autostop_which">Alerts to stop</string>
+    <string name="autostop_which_caption">Unchecked alerts keep running until you dismiss. Only the visual flash keeps the screen on; sound and vibration don’t need it.</string>
+    <string name="autostop_sound">Stop sound alert</string>
+    <string name="autostop_visual">Stop visual flash</string>
+    <string name="autostop_vibration">Stop vibration</string>
+
+    <!-- Vibration (Android-only alert channel) -->
+    <string name="vibration_title">Vibration alert</string>
+    <string name="vibration_caption">Vibrate with the alert, even in silent mode.</string>
+    <string name="vibration_unsupported">This device has no vibration motor.</string>
+    <string name="vibration_pattern">Vibration pattern</string>
+    <string name="vibration_pattern_hint">Tap a pattern to select and feel it.</string>
+    <string name="vibration_pattern_alert">Alert</string>
+    <string name="vibration_pattern_heartbeat">Heartbeat</string>
+    <string name="vibration_pattern_rapid">Rapid</string>
+    <string name="vibration_pattern_sos">S.O.S.</string>
+    <string name="vibration_pattern_staccato">Staccato</string>
+    <string name="vibration_pattern_symphony">Symphony</string>
+    <string name="vibration_preview">Preview vibration</string>
+    <string name="vibration_mode">Vibration strength</string>
+    <string name="vibration_mode_fixed">Fixed</string>
+    <string name="vibration_mode_gradual">Gradual</string>
+    <string name="vibration_mode_fixed_caption">Vibrates at the same strength from the start.</string>
+    <string name="vibration_mode_gradual_caption">Starts gently and builds up to full strength, so a nearby alert doesn\'t jolt you.</string>
+    <string name="vibration_intensity">Vibration intensity (%)</string>
+    <string name="vibration_no_amplitude">This phone\'s motor can\'t vary its strength, so it always vibrates at full strength.</string>
+    <string name="vibration_ramp">Build-up time (seconds)</string>
+    <string name="vibration_ramp_caption">How long gradual vibration takes to reach full intensity.</string>
+    <string name="autostop_max">Maximum duration (seconds)</string>
+    <plurals name="minutes">
+        <item quantity="one">%d minute</item>
+        <item quantity="other">%d minutes</item>
+    </plurals>
+    <plurals name="seconds">
+        <item quantity="one">%d second</item>
+        <item quantity="other">%d seconds</item>
+    </plurals>
+    <string name="test_overlay">Test alert with current settings</string>
+    <string name="test_overlay_caption">Shows a sample alert right now (skips the away check).</string>
+
+    <string name="photosensitivity_title">Photosensitivity warning</string>
+    <string name="photosensitivity_body">The visual flash strobes the whole screen between two colors. Flashing light can trigger seizures in people with photosensitive epilepsy. SlackWake limits it to 2.5 flashes per second, below the WCAG limit of 3, but if you or anyone who may see your screen is sensitive to flashing, keep it off.</string>
+    <string name="photosensitivity_enable">Turn on flash</string>
+    <string name="photosensitivity_keep_on">Keep flash on</string>
+    <string name="photosensitivity_turn_off">Turn flash off</string>
+    <string name="photosensitivity_dont_show">Don’t show this again</string>
+
+    <string name="verbose_title">Verbose diagnostics</string>
+    <string name="verbose_caption">Also log Slack notification titles and messages.</string>
+    <string name="verbose_warning_title">Log message contents?</string>
+    <string name="verbose_warning_body">The diagnostic log will then contain the sender, channel and text of Slack messages SlackWake processes. It stays on this device, but treat it as sensitive if you share it. Turn this off and clear the log when you\'re done.</string>
+    <string name="verbose_enable">Turn on</string>
+    <string name="log_share">Share log</string>
+    <string name="log_clear">Clear log</string>
+    <string name="log_cleared">Diagnostic log cleared</string>
+    <string name="log_share_subject">SlackWake diagnostic log</string>
+    <string name="log_caption">A small local log (about 256 KB) of what SlackWake decided and why. Never uploaded.</string>
+
+    <string name="about_app">SlackWake for Android</string>
+    <string name="about_version">Version %1$s</string>
+    <string name="about_author_label">Developer</string>
+    <string name="about_author" translatable="false">Md. Rifat Hasan Jihan</string>
+    <string name="about_website_url" translatable="false">https://rhjihan.github.io/</string>
+    <string name="about_open_website">Open developer’s website</string>
+    <string name="about_license_label">License</string>
+    <string name="about_license">GNU General Public License v3.0</string>
+    <string name="about_license_url" translatable="false">https://www.gnu.org/licenses/gpl-3.0.txt</string>
+    <string name="about_open_license">Open license</string>
+    <string name="about_no_browser">No browser is available to open the website.</string>
+    <string name="about_body_short">No network access, no accounts, no tracking.</string>
+
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
+    <string name="select">Select</string>
+
+    <!-- Color picker -->
+    <string name="color_picker_title">Choose a color</string>
+    <string name="color_hex">Hex</string>
+    <string name="color_red">R</string>
+    <string name="color_green">G</string>
+    <string name="color_blue">B</string>
+    <string name="color_palette">Palette</string>
+    <string name="color_preset">Color %1$s</string>
+    <string name="color_plane_a11y">Saturation and brightness</string>
+    <string name="color_hue_a11y">Hue</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_welcome_title">Never miss a Slack ping while you\'re away</string>
+    <string name="onboarding_welcome_body">When your phone has been locked for a while, the next Slack notification takes over the screen with a sound and an optional flash. While you\'re using your phone, SlackWake stays out of the way.\n\nSlackWake never talks to Slack\'s servers: it only reacts to the notifications Slack already shows on this phone.</string>
+    <string name="onboarding_setup_title">Set up access</string>
+    <string name="onboarding_next">Next</string>
+    <string name="onboarding_back">Back</string>
+    <string name="onboarding_skip">Skip</string>
+    <string name="onboarding_step">Step %1$d of %2$d</string>
+
+    <!-- Tile / shortcuts -->
+    <string name="tile_label">SlackWake</string>
+    <string name="shortcut_monitoring_off">Turn monitoring off</string>
+    <string name="shortcut_monitoring_on">Turn monitoring on</string>
+    <string name="shortcut_sound_off">Turn sound alert off</string>
+    <string name="shortcut_sound_on">Turn sound alert on</string>
+    <string name="shortcut_visual_off">Turn visual alert off</string>
+    <string name="shortcut_visual_on">Turn visual alert on</string>
+    <string name="shortcut_autostop_off">Turn auto-stop off</string>
+    <string name="shortcut_autostop_on">Turn auto-stop on</string>
+    <string name="shortcut_done">%1$s: %2$s</string>
+    <string name="on">On</string>
+    <string name="off">Off</string>
+</resources>

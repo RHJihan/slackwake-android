@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  SPDX-License-Identifier: GPL-3.0-only
+  Copyright (C) 2026 Md. Rifat Hasan Jihan
+-->
+<!-- Android 11 and lower: same policy as data_extraction_rules.xml. -->
+<full-backup-content>
+    <include domain="file" path="datastore/settings.json" />
+</full-backup-content>

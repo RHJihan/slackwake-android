@@ -1,0 +1,45 @@
+# SlackWake for Android (Gradle / Android Studio).
+
+# ---- Gradle ----
+.gradle/
+.kotlin/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+# Note: gradle/gradle-daemon-jvm.properties (the daemon JDK pin) is meant to be committed.
+
+# ---- Machine-specific ----
+local.properties
+
+# ---- Android Studio / IntelliJ ----
+.idea/
+*.iml
+captures/
+.navigation/
+
+# ---- Native builds ----
+.externalNativeBuild/
+.cxx/
+
+# ---- Build outputs Android Studio drops outside build/ ("Generate Signed App Bundle/APK") ----
+/app/release/
+/app/debug/
+*.apk
+*.aab
+*.ap_
+output-metadata.json
+
+# ---- Signing keys: never commit ----
+*.jks
+*.keystore
+keystore.properties
+
+# ---- Profiling / crash dumps ----
+*.hprof
+
+# ---- OS / editor temp files ----
+Thumbs.db
+Desktop.ini
+.DS_Store
+*.swp
+*~
+.vscode/
