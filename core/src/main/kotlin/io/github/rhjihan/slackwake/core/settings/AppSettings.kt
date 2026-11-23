@@ -6,6 +6,7 @@ package io.github.rhjihan.slackwake.core.settings
 import io.github.rhjihan.slackwake.core.color.ColorUtil
 import io.github.rhjihan.slackwake.core.schedule.DayWindow
 import io.github.rhjihan.slackwake.core.schedule.ScheduleZones
+import io.github.rhjihan.slackwake.core.schedule.TimeZoneCatalog
 import io.github.rhjihan.slackwake.core.schedule.WeeklySchedule
 import io.github.rhjihan.slackwake.core.vibration.VibrationMode
 import io.github.rhjihan.slackwake.core.vibration.VibrationPattern
@@ -116,6 +117,14 @@ data class AppSettings(
             scheduleDays = WeeklySchedule.normalized(scheduleDays),
             scheduleTimeZone = ScheduleZones.sanitize(scheduleTimeZone),
         )
+
+    /**
+     * [normalized], plus the schedule zone stored under its canonical ID. Persistence uses
+     * this; [normalized] alone suits code that has no zone catalog (it never changes which
+     * zone is meant, only how it is spelled).
+     */
+    fun normalized(zones: TimeZoneCatalog): AppSettings =
+        normalized().let { it.copy(scheduleTimeZone = ScheduleZones.canonicalize(it.scheduleTimeZone, zones)) }
 
     /** The zone the schedule's times are in, given the phone's current zone. */
     fun scheduleZone(device: ZoneId): ZoneId = ScheduleZones.resolve(scheduleTimeZone, device)

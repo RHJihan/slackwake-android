@@ -4,6 +4,7 @@
 package io.github.rhjihan.slackwake.data.settings
 
 import androidx.datastore.core.DataStore
+import io.github.rhjihan.slackwake.core.schedule.TimeZoneCatalog
 import io.github.rhjihan.slackwake.core.settings.AppSettings
 import io.github.rhjihan.slackwake.data.diagnostics.DiagnosticLog
 import kotlinx.coroutines.flow.Flow
@@ -16,8 +17,9 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
- * Typed settings access. Every value is clamped on read and on write; every change is
- * persisted immediately (Windows saved on every property change too).
+ * Typed settings access. Every value is clamped on read and on write, and the schedule
+ * zone is kept under its canonical ID (see [TimeZoneCatalog]); every change is persisted
+ * immediately (Windows saved on every property change too).
  */
 @Singleton
 class SettingsRepository
@@ -25,6 +27,7 @@ class SettingsRepository
     constructor(
         private val store: DataStore<AppSettings>,
         private val log: DiagnosticLog,
+        private val zones: TimeZoneCatalog,
     ) {
         val settings: Flow<AppSettings> =
             store.data
@@ -36,14 +39,14 @@ class SettingsRepository
                     } else {
                         throw e
                     }
-                }.map { it.normalized() }
+                }.map { it.normalized(zones) }
                 .distinctUntilChanged()
 
         suspend fun current(): AppSettings = settings.first()
 
         suspend fun update(transform: (AppSettings) -> AppSettings) {
             try {
-                store.updateData { transform(it.normalized()).normalized() }
+                store.updateData { transform(it.normalized(zones)).normalized(zones) }
             } catch (e: IOException) {
                 log.write("Settings write failed: ${e.javaClass.simpleName}")
             }

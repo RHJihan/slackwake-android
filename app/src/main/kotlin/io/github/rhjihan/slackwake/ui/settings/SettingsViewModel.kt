@@ -11,6 +11,7 @@ import io.github.rhjihan.slackwake.alert.AlertController
 import io.github.rhjihan.slackwake.core.backup.SettingsBackup
 import io.github.rhjihan.slackwake.core.model.SlackEvent
 import io.github.rhjihan.slackwake.core.schedule.DayWindow
+import io.github.rhjihan.slackwake.core.schedule.TimeZoneCatalog
 import io.github.rhjihan.slackwake.core.settings.AppSettings
 import io.github.rhjihan.slackwake.core.status.MonitorState
 import io.github.rhjihan.slackwake.core.status.MonitorStatus
@@ -90,8 +91,12 @@ class SettingsViewModel
         private val log: DiagnosticLog,
         private val vibrator: AlertVibrationSource,
         private val backup: BackupManager,
+        private val zones: TimeZoneCatalog,
     ) : ViewModel() {
         private val soundLabel = MutableStateFlow("")
+
+        /** Zone IDs for the schedule's time-zone picker. */
+        val selectableZoneIds: List<String> get() = zones.selectableIds()
 
         val state: StateFlow<SettingsUiState> =
             combine(

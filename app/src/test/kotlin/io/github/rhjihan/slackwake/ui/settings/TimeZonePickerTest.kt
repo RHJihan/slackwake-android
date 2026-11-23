@@ -4,9 +4,8 @@
 package io.github.rhjihan.slackwake.ui.settings
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import io.github.rhjihan.slackwake.data.timezone.IcuTimeZoneCatalog
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertFalse
-import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.time.Instant
@@ -33,13 +32,14 @@ class TimeZonePickerTest {
         assertEquals("GMT+6", describeZone("Asia/Dhaka", Locale.US, winter).offsetText)
     }
 
-    @Test fun `list offers real city zones only, sorted by offset`() {
-        val all = zoneOptions(Locale.US, winter)
-        val ids = all.map { it.id }.toSet()
-        assertTrue("America/New_York" in ids)
-        assertTrue("Asia/Dhaka" in ids)
-        assertFalse("legacy alias hidden", "US/Eastern" in ids)
-        assertFalse("Etc zones hidden", ids.any { it.startsWith("Etc/") })
+    @Test fun `city names resolve for renamed IANA IDs`() {
+        assertEquals("Kolkata", describeZone("Asia/Kolkata", Locale.US, winter).city)
+        assertEquals("Indianapolis", describeZone("America/Indiana/Indianapolis", Locale.US, winter).city)
+    }
+
+    @Test fun `rows are sorted by offset then city, with one Indianapolis`() {
+        val all = zoneOptions(IcuTimeZoneCatalog().selectableIds(), Locale.US, winter)
         assertEquals(all.sortedWith(compareBy({ it.offsetSeconds }, { it.city })), all)
+        assertEquals(1, all.count { it.city == "Indianapolis" })
     }
 }

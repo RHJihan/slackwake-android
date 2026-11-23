@@ -6,6 +6,7 @@ package io.github.rhjihan.slackwake.data.settings
 import androidx.datastore.core.DataStoreFactory
 import androidx.datastore.core.handlers.ReplaceFileCorruptionHandler
 import app.cash.turbine.test
+import io.github.rhjihan.slackwake.core.schedule.TimeZoneCatalog
 import io.github.rhjihan.slackwake.core.settings.AppSettings
 import io.github.rhjihan.slackwake.data.diagnostics.DiagnosticLog
 import kotlinx.coroutines.test.TestScope
@@ -29,8 +30,32 @@ class SettingsRepositoryTest {
                 scope = backgroundScope,
                 produceFile = { file },
             )
-        return SettingsRepository(store, log)
+        return SettingsRepository(store, log, zones)
     }
+
+    /** Plain JVM test (no ICU): one alias, everything else canonical. */
+    private val zones =
+        object : TimeZoneCatalog {
+            override fun canonicalId(id: String) = if (id == "America/Indianapolis") "America/Indiana/Indianapolis" else id
+
+            override fun selectableIds() = emptyList<String>()
+        }
+
+    @Test fun `an alias saved by an older version is migrated to the canonical zone ID`() =
+        runTest {
+            val f = tmp.newFile("settings.json").apply { writeText("""{"ScheduleTimeZone":"America/Indianapolis"}""") }
+            val r = repo(f)
+            assertEquals("America/Indiana/Indianapolis", r.current().scheduleTimeZone)
+            r.update { it.copy(enabled = false) }
+            assertTrue(f.readText(), f.readText().contains("\"ScheduleTimeZone\": \"America/Indiana/Indianapolis\""))
+        }
+
+    @Test fun `picking an alias stores the canonical zone ID`() =
+        runTest {
+            val r = repo(File(tmp.root, "settings.json"))
+            r.update { it.copy(scheduleTimeZone = "America/Indianapolis") }
+            assertEquals("America/Indiana/Indianapolis", r.current().scheduleTimeZone)
+        }
 
     @Test fun `missing file yields defaults`() =
         runTest {

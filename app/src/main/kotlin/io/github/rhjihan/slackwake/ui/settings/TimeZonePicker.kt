@@ -45,6 +45,7 @@ import androidx.compose.ui.window.DialogProperties
 import androidx.compose.ui.window.DialogWindowProvider
 import androidx.core.view.WindowCompat
 import io.github.rhjihan.slackwake.R
+import io.github.rhjihan.slackwake.data.timezone.IcuTimeZoneCatalog
 import io.github.rhjihan.slackwake.ui.components.imeOverlapPadding
 import java.time.Instant
 import java.time.ZoneId
@@ -60,9 +61,6 @@ data class ZoneOption(
     val offsetText: String,
     val offsetSeconds: Int,
 )
-
-/** IANA "Area/City" zones; skips legacy aliases (US/…, Etc/GMT+5, SystemV/…). */
-private val REGION_ZONE = Regex("^(Africa|America|Antarctica|Asia|Atlantic|Australia|Europe|Indian|Pacific)/[^/].*")
 
 /** "GMT", "GMT+6", "GMT−5", "GMT+5:30" (true minus sign, like system settings). */
 fun formatGmtOffset(totalSeconds: Int): String {
@@ -82,19 +80,22 @@ fun describeZone(
 ): ZoneOption {
     val zone = ZoneId.of(id)
     val offset = zone.rules.getOffset(now).totalSeconds
-    val city = runCatching { names.getExemplarLocationName(id) }.getOrNull() ?: id.substringAfterLast('/').replace('_', ' ')
+    // ICU's display data is keyed by CLDR IDs, which can differ from the IANA ID we hold.
+    val cldr = IcuTimeZoneCatalog.cldrId(id) ?: id
+    val city =
+        runCatching { names.getExemplarLocationName(cldr) }.getOrNull()
+            ?: id.substringAfterLast('/').replace('_', ' ')
     return ZoneOption(id, city, zone.getDisplayName(TextStyle.FULL, locale), formatGmtOffset(offset), offset)
 }
 
-/** All selectable zones, sorted by current offset then city, like Google Calendar's picker. */
+/** Rows for [zoneIds] (the catalog's selectable zones), sorted by current offset then city, like Google Calendar. */
 fun zoneOptions(
+    zoneIds: List<String>,
     locale: Locale,
     now: Instant,
 ): List<ZoneOption> {
     val names = TimeZoneNames.getInstance(locale)
-    return ZoneId
-        .getAvailableZoneIds()
-        .filter { REGION_ZONE.matches(it) }
+    return zoneIds
         .map { describeZone(it, locale, now, names) }
         .sortedWith(compareBy({ it.offsetSeconds }, { it.city }))
 }
@@ -106,6 +107,7 @@ fun zoneOptions(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TimeZonePickerDialog(
+    zoneIds: List<String>,
     selectedId: String,
     deviceZone: ZoneId,
     locale: Locale,
@@ -113,7 +115,7 @@ fun TimeZonePickerDialog(
     onDismiss: () -> Unit,
 ) {
     val now = remember { Instant.now() }
-    val all = remember(locale) { zoneOptions(locale, now) }
+    val all = remember(zoneIds, locale) { zoneOptions(zoneIds, locale, now) }
     val device = remember(deviceZone, locale) { describeZone(deviceZone.id, locale, now) }
     var query by rememberSaveable { mutableStateOf("") }
     val shown =

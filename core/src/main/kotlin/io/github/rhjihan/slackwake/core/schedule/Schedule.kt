@@ -58,6 +58,16 @@ object ScheduleZones {
 
     /** Keeps only valid zone IDs; anything else (typo, old backup) becomes "" = phone zone. */
     fun sanitize(id: String): String = if (id.isNotBlank() && runCatching { ZoneId.of(id) }.isSuccess) id else ""
+
+    /**
+     * [sanitize], then the catalog's canonical ID, so one zone is always stored under one
+     * name (an alias saved by an older version or another device is migrated). An ID valid
+     * for java.time but unknown to the catalog is kept as is rather than dropped.
+     */
+    fun canonicalize(
+        id: String,
+        catalog: TimeZoneCatalog,
+    ): String = sanitize(id).let { valid -> if (valid.isEmpty()) "" else catalog.canonicalId(valid) ?: valid }
 }
 
 /**

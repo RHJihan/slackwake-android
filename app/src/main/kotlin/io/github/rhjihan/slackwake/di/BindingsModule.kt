@@ -7,6 +7,8 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import io.github.rhjihan.slackwake.core.schedule.TimeZoneCatalog
+import io.github.rhjihan.slackwake.data.timezone.IcuTimeZoneCatalog
 import io.github.rhjihan.slackwake.sound.AlarmSoundFactory
 import io.github.rhjihan.slackwake.sound.AlertSoundSource
 import io.github.rhjihan.slackwake.vibration.AlertVibrationSource
@@ -20,4 +22,7 @@ abstract class BindingsModule {
 
     @Binds
     abstract fun alertVibrationSource(impl: DeviceVibrator): AlertVibrationSource
+
+    @Binds
+    abstract fun timeZoneCatalog(impl: IcuTimeZoneCatalog): TimeZoneCatalog
 }

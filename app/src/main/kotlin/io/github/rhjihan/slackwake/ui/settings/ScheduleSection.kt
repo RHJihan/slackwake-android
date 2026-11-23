@@ -144,6 +144,7 @@ fun ScheduleSection(
 
     if (pickingZone) {
         TimeZonePickerDialog(
+            zoneIds = viewModel.selectableZoneIds,
             selectedId = s.scheduleTimeZone,
             deviceZone = now.zone,
             locale = locale,

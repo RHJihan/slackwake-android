@@ -14,6 +14,7 @@ import io.github.rhjihan.slackwake.core.settings.AppSettings
 import io.github.rhjihan.slackwake.data.diagnostics.DiagnosticLog
 import io.github.rhjihan.slackwake.data.settings.SettingsRepository
 import io.github.rhjihan.slackwake.data.settings.SettingsSerializer
+import io.github.rhjihan.slackwake.data.timezone.IcuTimeZoneCatalog
 import io.github.rhjihan.slackwake.sound.SoundResolver
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runTest
@@ -41,7 +42,7 @@ class BackupManagerTest {
                 scope = backgroundScope,
                 produceFile = { File(tmp.root, "settings-${System.nanoTime()}.json") },
             )
-        val repo = SettingsRepository(store, log)
+        val repo = SettingsRepository(store, log, IcuTimeZoneCatalog())
         return BackupManager(context, repo, SoundResolver(context, log), log) to repo
     }
 
