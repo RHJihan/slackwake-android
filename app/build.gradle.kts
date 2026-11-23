@@ -14,6 +14,9 @@ plugins {
 /** Release signing comes from gradle.properties (e.g. ~/.gradle) or the environment — never the repo. */
 fun signingValue(name: String): String? = (findProperty(name) as String?) ?: System.getenv(name)
 
+/** Single source of truth for the version; also names the build outputs. */
+val appVersionName = "1.0.0"
+
 android {
     namespace = "io.github.rhjihan.slackwake"
     compileSdk = 37
@@ -23,7 +26,7 @@ android {
         minSdk = 26
         targetSdk = 37
         versionCode = 1
-        versionName = "1.0.0"
+        versionName = appVersionName
         testInstrumentationRunner = "io.github.rhjihan.slackwake.HiltTestRunner"
     }
 
@@ -77,6 +80,12 @@ android {
     packaging {
         resources.excludes += setOf("/META-INF/{AL2.0,LGPL2.1}", "/META-INF/LICENSE*")
     }
+}
+
+// AGP names outputs "<archivesName>-<buildType>.apk/.aab", e.g.
+// SlackWake_android_v1.0.0-release.apk and SlackWake_android_v1.0.0-debug.apk.
+base {
+    archivesName = "SlackWake_Android_v$appVersionName"
 }
 
 kotlin {
